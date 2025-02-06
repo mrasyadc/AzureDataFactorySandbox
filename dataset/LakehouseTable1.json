@@ -1,0 +1,35 @@
+{
+	"name": "LakehouseTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lakehouse1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "LakehouseTable",
+		"schema": [
+			{
+				"name": "start_date_key",
+				"type": "integer"
+			},
+			{
+				"name": "end_date_key",
+				"type": "integer"
+			},
+			{
+				"name": "project",
+				"type": "integer"
+			},
+			{
+				"name": "value",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"table": "project_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

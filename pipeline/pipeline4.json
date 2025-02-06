@@ -1,0 +1,131 @@
+{
+	"name": "pipeline4",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FactProjectTable",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"columnCount",
+						"exists",
+						"structure"
+					]
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "LakehouseTableSource"
+					},
+					"sink": {
+						"type": "LakehouseTableSink",
+						"tableActionOption": "Append",
+						"partitionOption": "None"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "start_date_key",
+									"type": "Int64",
+									"physicalType": "long"
+								},
+								"sink": {
+									"name": "start_date_key"
+								}
+							},
+							{
+								"source": {
+									"name": "end_date_key",
+									"type": "Int64",
+									"physicalType": "long"
+								},
+								"sink": {
+									"name": "end_date_key"
+								}
+							},
+							{
+								"source": {
+									"name": "project_key",
+									"type": "Int64",
+									"physicalType": "long"
+								},
+								"sink": {
+									"name": "project"
+								}
+							},
+							{
+								"source": {
+									"name": "project_value",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 6,
+									"precision": 34
+								},
+								"sink": {
+									"name": "value",
+									"scale": 2,
+									"precision": 10
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FactProjectTable",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "LakehouseTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-01-31T10:49:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

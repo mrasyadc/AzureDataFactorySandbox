@@ -1,0 +1,35 @@
+{
+	"name": "FactProjectTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lakehouse",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "LakehouseTable",
+		"schema": [
+			{
+				"name": "start_date_key",
+				"type": "long"
+			},
+			{
+				"name": "end_date_key",
+				"type": "long"
+			},
+			{
+				"name": "project_key",
+				"type": "long"
+			},
+			{
+				"name": "project_value",
+				"type": "decimal",
+				"precision": 34,
+				"scale": 6
+			}
+		],
+		"typeProperties": {
+			"table": "FACT_PROJECT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
